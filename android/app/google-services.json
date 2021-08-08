@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "44186900827",
+    "firebase_url": "https://social-project-5911c-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "social-project-5911c",
+    "storage_bucket": "social-project-5911c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44186900827:android:2601789e585423c1fbe27e",
+        "android_client_info": {
+          "package_name": "com.socialmediaproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "44186900827-n090oach32o4ltaekgoednlh7cqhf3lf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.socialmediaproject",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "44186900827-hqdq9mc36dlvdiri237furg76rvtgbjk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdh52aXmWEdVQ4NEQ8gvCwSzNfIhrZRuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44186900827-hqdq9mc36dlvdiri237furg76rvtgbjk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

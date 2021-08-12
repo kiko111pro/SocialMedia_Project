@@ -6,7 +6,7 @@ import {Button, TEXT as Text, Input} from '../../utils/UI/Custom';
 import {Colors} from '../../utils/UI/Colors';
 import {useDispatch, useSelector} from 'react-redux';
 import {Snack} from '../../utils/components/Snackbar';
-import {numbersOnlyRegex} from '../../utils/functions/regex';
+import {numbersOnlyRegex} from '../../utils/functions';
 
 const Login = ({navigation}) => {
   const dispatch = useDispatch();

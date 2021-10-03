@@ -13,8 +13,8 @@ import AppShell from './shell/AppShell';
 
 import auth from '@react-native-firebase/auth';
 import {updateUser} from './data/reducers/profile/profile.reducer';
-import {LogBox} from 'react-native';
-LogBox.ignoreLogs(['Reanimated 2']);
+// import {LogBox} from 'react-native';
+// LogBox.ignoreLogs(['Reanimated 2']);
 
 const reduxStore = configureStore({
   reducer: reducers,

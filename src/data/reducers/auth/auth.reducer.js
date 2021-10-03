@@ -1,6 +1,7 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import firebaseSetup from '../../../../setup';
-const {auth} = firebaseSetup();
+import firestore from '@react-native-firebase/firestore';
+const { auth } = firebaseSetup();
 
 export const signIn = createAsyncThunk(
   'auth/confirmation',

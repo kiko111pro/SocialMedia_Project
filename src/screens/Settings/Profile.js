@@ -5,12 +5,14 @@ import {
   StyleSheet,
   TextInput,
   Pressable,
+  Image,
 } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
 import Header from '../../utils/components/Header';
 import { Colors } from '../../utils/UI/Colors';
 import { RippleIcon, TEXT, Button } from '../../utils/UI/Custom';
 import IIcon from 'react-native-vector-icons/FontAwesome5';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { RadioButton } from 'react-native-paper';
 import storage from '@react-native-firebase/storage';
@@ -21,14 +23,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getAge } from '../../utils/functions';
 import { getCurrentUserDetails } from '../../data/reducers/profile/profile.reducer';
 import { Snack } from '../../utils/components/Snackbar';
+import { color } from 'react-native-reanimated';
 
 // import { chooseFile } from '../../utils/functions';
 
 function Profile() {
   const dispatch = useDispatch();
   const { user, currentUserDetails } = useSelector(state => state.profile);
-  console.log('-------------');
-  console.log({ user });
+
   const {
     control,
     handleSubmit,
@@ -43,6 +45,10 @@ function Profile() {
     currentUserDetails ? currentUserDetails._data.gender : 'male',
   );
   const [profilePic, setProfilePic] = useState(null);
+  const [images, setImages] = useState({
+    imageOne: '',
+    imageTwo: '',
+  });
 
   useEffect(() => {
     setValue('name', currentUserDetails && currentUserDetails._data.name);
@@ -51,9 +57,10 @@ function Profile() {
       'profession',
       currentUserDetails && currentUserDetails._data.profession,
     );
+    setInputDOB(currentUserDetails && currentUserDetails._data.dob);
   }, []);
 
-  const chooseFile = () => {
+  const chooseFile = (pic = 'profile') => {
     // var initial = null;
     let options = {
       //   mediaType: type,
@@ -78,14 +85,26 @@ function Profile() {
 
       let source = response.assets[0];
 
-      setProfilePic({
-        name: source?.fileName,
-        type: source.type,
-        uri:
-          Platform.OS === 'android'
-            ? source?.uri
-            : source?.uri.replace('file://', ''),
-      });
+      pic === 'profile' &&
+        setProfilePic({
+          name: source?.fileName,
+          type: source.type,
+          uri:
+            Platform.OS === 'android'
+              ? source?.uri
+              : source?.uri.replace('file://', ''),
+        });
+
+      pic !== 'profile' &&
+        setImages({
+          ...images,
+          [pic]: {
+            uri:
+              Platform.OS === 'android'
+                ? source?.uri
+                : source?.uri.replace('file://', ''),
+          },
+        });
     });
   };
 
@@ -107,10 +126,9 @@ function Profile() {
     setLoading(true);
     if (profilePic) {
       let uploadURI = profilePic.uri;
-      let fileName = uploadURI.substring(uploadURI.lastIndexOf('/') + 1);
       try {
-        await storage().ref(`/photos/${fileName}`).putFile(uploadURI);
-        let url = await storage().ref(`photos/${fileName}`).getDownloadURL();
+        await storage().ref(`/photos/${user.uid}`).putFile(uploadURI);
+        let url = await storage().ref(`photos/${user.uid}`).getDownloadURL();
         await firestore().collection('Users').doc(user.uid).set(
           {
             profileImage: url,
@@ -147,13 +165,15 @@ function Profile() {
   };
 
   return (
-    <ScrollView style={{ backgroundColor: '#fff' }}>
+    <ScrollView
+      keyboardShouldPersistTaps={'handled'}
+      style={{ backgroundColor: '#fff' }}>
       <Header title="Edit Profile" />
       <View style={{ padding: 16 }}>
         <View style={styles.imageContainer}>
           <View style={styles.imageWrapper}>
             <Avatar.Image
-              size={100}
+              size={150}
               style={styles.image}
               source={
                 profilePic?.uri
@@ -168,7 +188,7 @@ function Profile() {
               color={Colors.secondary}
               size={20}
               style={styles.camera}
-              onPress={chooseFile}
+              onPress={() => chooseFile()}
             />
           </View>
         </View>
@@ -320,6 +340,42 @@ function Profile() {
             </TEXT>
           )}
         </View>
+
+        <View style={styles.inputContainer}>
+          <TEXT>Upload Images</TEXT>
+          <View style={styles.imagesWrapper}>
+            <Pressable
+              onPress={() => chooseFile('imageOne')}
+              style={styles.images}>
+              {images.imageOne ? (
+                <Image
+                  resizeMode="cover"
+                  source={{ uri: images.imageOne?.uri }}
+                  style={{ height: '100%', width: '100%' }}
+                />
+              ) : (
+                <MIcon name="add" size={25} color={Colors.secondary} />
+              )}
+            </Pressable>
+            <Pressable
+              onPress={() => chooseFile('imageTwo')}
+              style={styles.images}>
+              {images.imageTwo ? (
+                <Image
+                  resizeMode="cover"
+                  source={{ uri: images.imageTwo?.uri }}
+                  style={{
+                    height: '100%',
+                    width: '100%',
+                  }}
+                />
+              ) : (
+                <MIcon name="add" size={25} color={Colors.secondary} />
+              )}
+            </Pressable>
+          </View>
+        </View>
+
         <Button showLoading={loading} onPress={handleSubmit(onSubmit)}>
           UPDATE
         </Button>
@@ -392,5 +448,25 @@ const styles = StyleSheet.create({
     // flex: 1,
     height: 50,
     justifyContent: 'space-between',
+  },
+
+  imagesWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 170,
+    marginTop: 16,
+    // borderWidth: 1,
+  },
+
+  images: {
+    borderWidth: 1,
+    width: '46%',
+    height: '100%',
+    borderColor: '#bdbdbd',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // flex: 1,
   },
 });

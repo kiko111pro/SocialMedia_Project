@@ -8,12 +8,10 @@ export const getCurrentUserDetails = createAsyncThunk(
     try {
       const res = await firestore().collection('Users').doc(payload).get();
       await setDataOffline('CURRENT_USER', res._data);
-      console.log('Giving from online');
       return res;
     } catch (error) {
       let offlineData = await getOfflineData('CURRENT_USER');
       if (offlineData) {
-        console.log('Giving from Offline');
         return offlineData;
       }
       return thunkAPI.rejectWithValue(error);

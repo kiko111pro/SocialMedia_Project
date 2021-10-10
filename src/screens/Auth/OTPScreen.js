@@ -1,23 +1,22 @@
 import React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import {Button} from '../../utils/UI/Custom';
 import Container from '../../utils/components/Container';
 import Header from '../../utils/components/Header';
-import {TEXT, Button} from '../../utils/UI/Custom';
+import { TEXT, Button } from '../../utils/UI/Custom';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
-import {StyleSheet} from 'react-native';
-import {Colors} from '../../utils/UI/Colors';
-import {Snack} from '../../utils/components/Snackbar';
+import { StyleSheet } from 'react-native';
+import { Colors } from '../../utils/UI/Colors';
+import { Snack } from '../../utils/components/Snackbar';
 
-function OTPScreen({route, navigation}) {
+function OTPScreen({ route, navigation }) {
   const dispatch = useDispatch();
-  const {input} = route.params;
-  const {confirmation} = useSelector(state => state.auth);
+  const { input } = route.params;
+  const { confirmation } = useSelector(state => state.auth);
 
   const handleSubmit = async code => {
     try {
       let res = await confirmation.confirm(code);
-      console.log({res});
     } catch (error) {
       Snack('Invalid OTP');
       // console.error({error});
@@ -27,11 +26,11 @@ function OTPScreen({route, navigation}) {
   return (
     <>
       <Header title="Verify phone number" />
-      <Container style={{alignItems: 'center'}}>
+      <Container style={{ alignItems: 'center' }}>
         <TEXT size="small">Code has been sent to {input}</TEXT>
 
         <OTPInputView
-          style={{width: '90%', height: 50, marginVertical: 44}}
+          style={{ width: '90%', height: 50, marginVertical: 44 }}
           pinCount={6}
           // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
           // onCodeChanged = {code => { this.setState({code})}}

@@ -9,8 +9,6 @@ function TabHeader({ title, profile = false }) {
   const dispatch = useDispatch();
   const { user, currentUserDetails } = useSelector(state => state.profile);
 
-  console.log({ currentUserDetails });
-
   useEffect(() => {
     dispatch(getCurrentUserDetails(user.uid));
   }, [user.uid]);

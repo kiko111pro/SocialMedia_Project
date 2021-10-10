@@ -1,62 +1,62 @@
 import React from 'react';
-import {FlatList, View, StyleSheet, Image, ScrollView} from 'react-native';
-import {Avatar, TouchableRipple} from 'react-native-paper';
+import { FlatList, View, StyleSheet, Image, ScrollView } from 'react-native';
+import { Avatar, TouchableRipple } from 'react-native-paper';
 import Dot from '../../utils/components/Dot';
 import TabHeader from '../../utils/components/TabHeader';
-import {truncate} from '../../utils/functions';
-import {TEXT} from '../../utils/UI/Custom';
+import { truncate } from '../../utils/functions';
+import { TEXT } from '../../utils/UI/Custom';
 
 const DATA = true
   ? [
       {
         image: null,
-        name: 'Rachel',
+        name: 'Lana Rhodes',
         message: 'Hey There how you doing hope you are well there',
       },
       {
         image: null,
-        name: 'Rachel',
+        name: 'Dani Daniels',
         message: 'Hey There how you doing hope you are well there',
       },
       {
         image: null,
-        name: 'Rachel',
+        name: 'Ava Addams',
         message: 'Hey There how you doing hope you are well there',
       },
       {
         image: null,
-        name: 'Rachel',
+        name: 'Skylar Vox',
         message: 'Hey There how you doing hope you are well there',
       },
       {
         image: null,
-        name: 'Rachel',
+        name: 'Mia Khalifa',
         message: 'Hey There how you doing hope you are well there',
       },
       {
         image: null,
-        name: 'Rachel',
+        name: 'Kendra Lust',
         message: 'Hey There how you doing hope you are well there',
       },
       {
         image: null,
-        name: 'Rachel',
+        name: 'Riley Reid',
         message: 'Hey There how you doing hope you are well there',
       },
       {
         image: null,
-        name: 'Rachel',
+        name: 'Lena Paul',
         message: 'Hey There how you doing hope you are well there',
       },
       {
         image: null,
-        name: 'Rachel',
+        name: 'Mia Malkova',
         message: 'Hey There how you doing hope you are well there',
       },
     ]
   : [];
 
-const renderItem = ({item}) => {
+const renderItem = ({ item }) => {
   return (
     <TouchableRipple
       rippleColor="rgba(0,0,0,.1)"

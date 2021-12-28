@@ -8,6 +8,7 @@ import {
   Image,
 } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
+import { SETTINGS } from '../../../constants';
 import Header from '../../utils/components/Header';
 import { Colors } from '../../utils/UI/Colors';
 import { RippleIcon, TEXT, Button } from '../../utils/UI/Custom';
@@ -23,13 +24,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getAge } from '../../utils/functions';
 import { getCurrentUserDetails } from '../../data/reducers/profile/profile.reducer';
 import { Snack } from '../../utils/components/Snackbar';
-import { color } from 'react-native-reanimated';
+import { useNavigation } from '@react-navigation/native';
 
 // import { chooseFile } from '../../utils/functions';
 
 function Profile() {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const { user, currentUserDetails } = useSelector(state => state.profile);
+
+  console.log({ user, currentUserDetails });
 
   const {
     control,
@@ -49,6 +53,7 @@ function Profile() {
     imageOne: '',
     imageTwo: '',
   });
+  const [age, setAge] = useState();
 
   useEffect(() => {
     setValue('name', currentUserDetails && currentUserDetails._data.name);
@@ -59,6 +64,12 @@ function Profile() {
     );
     setInputDOB(currentUserDetails && currentUserDetails._data.dob);
   }, []);
+
+  useEffect(() => {
+    let updateAge = getAge(inputDOB);
+    setAge(updateAge);
+    return () => null;
+  }, [inputDOB]);
 
   const chooseFile = (pic = 'profile') => {
     // var initial = null;
@@ -108,6 +119,8 @@ function Profile() {
     });
   };
 
+  console.log({ inputDOB });
+
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -140,20 +153,18 @@ function Profile() {
       }
     }
     try {
-      await firestore()
-        .collection('Users')
-        .doc(user.uid)
-        .set(
-          {
-            name: data.name,
-            city: data.city,
-            profession: data.profession,
-            age: inputDOB ? getAge(inputDOB) : null,
-            gender,
-            dob: inputDOB,
-          },
-          { merge: true },
-        );
+      await firestore().collection('Users').doc(user.uid).set(
+        {
+          name: data.name,
+          city: data.city,
+          profession: data.profession,
+          age,
+          gender,
+          dob: inputDOB,
+          id: user.uid,
+        },
+        { merge: true },
+      );
     } catch (error) {
       console.log('Error while updating details: ', error);
     }
@@ -162,13 +173,17 @@ function Profile() {
 
     setLoading(false);
     Snack('Profile Updated!');
+    // navigation.reset();
   };
 
   return (
     <ScrollView
-      keyboardShouldPersistTaps={'handled'}
+      // keyboardShouldPersistTaps={'handled'}
       style={{ backgroundColor: '#fff' }}>
-      <Header title="Edit Profile" />
+      <Header
+        title={!!currentUserDetails ? 'Edit Profile' : 'Setup Your Profile'}
+        newUser={!!currentUserDetails}
+      />
       <View style={{ padding: 16 }}>
         <View style={styles.imageContainer}>
           <View style={styles.imageWrapper}>
@@ -339,41 +354,6 @@ function Profile() {
               {errors?.profession.message}
             </TEXT>
           )}
-        </View>
-
-        <View style={styles.inputContainer}>
-          <TEXT>Upload Images</TEXT>
-          <View style={styles.imagesWrapper}>
-            <Pressable
-              onPress={() => chooseFile('imageOne')}
-              style={styles.images}>
-              {images.imageOne ? (
-                <Image
-                  resizeMode="cover"
-                  source={{ uri: images.imageOne?.uri }}
-                  style={{ height: '100%', width: '100%' }}
-                />
-              ) : (
-                <MIcon name="add" size={25} color={Colors.secondary} />
-              )}
-            </Pressable>
-            <Pressable
-              onPress={() => chooseFile('imageTwo')}
-              style={styles.images}>
-              {images.imageTwo ? (
-                <Image
-                  resizeMode="cover"
-                  source={{ uri: images.imageTwo?.uri }}
-                  style={{
-                    height: '100%',
-                    width: '100%',
-                  }}
-                />
-              ) : (
-                <MIcon name="add" size={25} color={Colors.secondary} />
-              )}
-            </Pressable>
-          </View>
         </View>
 
         <Button showLoading={loading} onPress={handleSubmit(onSubmit)}>

@@ -4,16 +4,18 @@ import { RippleIcon, TEXT } from '../UI/Custom';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/core';
 
-function Header({ title }) {
+function Header({ title, newUser }) {
   const navigation = useNavigation();
   return (
     <View style={styles.header}>
-      <RippleIcon
-        style={{ marginRight: 25 }}
-        size={24}
-        onPress={() => navigation.goBack()}>
-        <MIcon name="keyboard-backspace" size={24} />
-      </RippleIcon>
+      {newUser && (
+        <RippleIcon
+          style={{ marginRight: 25 }}
+          size={24}
+          onPress={() => navigation.goBack()}>
+          <MIcon name="keyboard-backspace" size={24} />
+        </RippleIcon>
+      )}
       <TEXT>{title}</TEXT>
     </View>
   );

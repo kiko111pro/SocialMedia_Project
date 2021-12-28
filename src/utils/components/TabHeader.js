@@ -19,7 +19,7 @@ function TabHeader({ title, profile = false }) {
         <View style={styles.profile}>
           <Image
             source={
-              currentUserDetails
+              !!currentUserDetails?._data?.profileImage
                 ? {
                     uri: currentUserDetails?._data?.profileImage,
                   }

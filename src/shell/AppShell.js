@@ -11,6 +11,7 @@ import Home from '../screens/Home/Home';
 import Settings from '../screens/Settings/Settings';
 import Inbox from '../screens/Messages/Inbox';
 import Profile from '../screens/Settings/Profile';
+import { useSelector } from 'react-redux';
 
 const STACK = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -69,9 +70,12 @@ function TabNavigator() {
 }
 
 function AppShell() {
+  const { currentUserDetails } = useSelector(state => state.profile);
+
   return (
     <STACK.Navigator screenOptions={{ header: () => null }}>
       <STACK.Screen name="tab" component={TabNavigator} />
+
       <STACK.Screen name="Profile" component={Profile} />
     </STACK.Navigator>
   );

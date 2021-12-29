@@ -1,12 +1,12 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Colors} from '../UI/Colors';
+import { View } from 'react-native';
+import { Colors } from '../UI/Colors';
 
-function Dot() {
+function Dot({ color = Colors.secondary }) {
   return (
     <View
       style={{
-        backgroundColor: Colors.secondary,
+        backgroundColor: color,
         height: 10,
         width: 10,
         borderRadius: 10,

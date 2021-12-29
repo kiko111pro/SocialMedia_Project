@@ -1,16 +1,17 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import auth from '@react-native-firebase/auth';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-import {RippleIcon} from '../utils/UI/Custom';
-import {Colors} from '../utils/UI/Colors';
+import { RippleIcon } from '../utils/UI/Custom';
+import { Colors } from '../utils/UI/Colors';
 
 //screens
 import Home from '../screens/Home/Home';
 import Settings from '../screens/Settings/Settings';
 import Inbox from '../screens/Messages/Inbox';
 import Profile from '../screens/Settings/Profile';
+import { useSelector } from 'react-redux';
 
 const STACK = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -18,8 +19,8 @@ const Tab = createBottomTabNavigator();
 function TabNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
           if (route.name === 'Home') {
@@ -49,25 +50,32 @@ function TabNavigator() {
           null,
         ],
       })}>
-      <Tab.Screen name="Home" component={Home} options={{header: () => null}} />
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{ header: () => null }}
+      />
       <Tab.Screen
         name="Messages"
         component={Inbox}
-        options={{header: () => null}}
+        options={{ header: () => null }}
       />
       <Tab.Screen
         name="Settings"
         component={Settings}
-        options={{header: () => null}}
+        options={{ header: () => null }}
       />
     </Tab.Navigator>
   );
 }
 
 function AppShell() {
+  const { currentUserDetails } = useSelector(state => state.profile);
+
   return (
-    <STACK.Navigator screenOptions={{header: () => null}}>
+    <STACK.Navigator screenOptions={{ header: () => null }}>
       <STACK.Screen name="tab" component={TabNavigator} />
+
       <STACK.Screen name="Profile" component={Profile} />
     </STACK.Navigator>
   );

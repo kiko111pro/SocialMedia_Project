@@ -1,29 +1,40 @@
-import React from 'react';
-import {View, Image, StyleSheet} from 'react-native';
-import {Colors} from '../UI/Colors';
-import {TEXT} from '../UI/Custom';
+import React, { memo, useEffect } from 'react';
+import { View, Image, StyleSheet } from 'react-native';
+import { Colors } from '../UI/Colors';
+import { TEXT } from '../UI/Custom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentUserDetails } from '../../data/reducers/profile/profile.reducer';
 
-function TabHeader({title, profile = false}) {
+function TabHeader({ title, profile = false }) {
+  const dispatch = useDispatch();
+  const { user, currentUserDetails } = useSelector(state => state.profile);
+
+  useEffect(() => {
+    dispatch(getCurrentUserDetails(user.uid));
+  }, [user.uid]);
+
   return (
     <View style={styles.header}>
       {profile && (
         <View style={styles.profile}>
           <Image
             source={
-              {
-                uri: 'https://www.make-over.in/static/media/hero.23091799.png',
-              } || require('../../assets/user-placeholder.png')
+              !!currentUserDetails?._data?.profileImage
+                ? {
+                    uri: currentUserDetails?._data?.profileImage,
+                  }
+                : require('../../assets/user-placeholder.png')
             }
             resizeMode="cover"
             style={styles.profileImage}
           />
-          <TEXT bold style={{color: 'white', fontSize: 28}}>
-            Kshitiz
+          <TEXT bold style={{ color: 'white', fontSize: 28 }}>
+            {currentUserDetails && currentUserDetails._data.name}
           </TEXT>
         </View>
       )}
 
-      <TEXT bold style={{color: 'white', fontSize: 28}}>
+      <TEXT bold style={{ color: 'white', fontSize: 28 }}>
         {title || 'Tab Name'}
       </TEXT>
     </View>

@@ -1,4 +1,4 @@
-import {TouchableRipple} from 'react-native-paper';
+import { TouchableRipple } from 'react-native-paper';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -7,11 +7,11 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {Colors} from '../UI/Colors';
+import { Colors } from '../UI/Colors';
 
 const checkSize = str => {
   switch (str) {
-    case 'vary-small':
+    case 'very-small':
       return 12;
     case 'small':
       return 14;
@@ -55,7 +55,7 @@ export const TEXT = ({
           fontSize: checkSize(size),
           color: '#000',
         },
-        {...style},
+        { ...style },
       ]}
       {...rest}>
       {children}
@@ -63,7 +63,7 @@ export const TEXT = ({
   );
 };
 
-export const Button = ({children, onPress, showLoading, ...rest}) => {
+export const Button = ({ children, onPress, showLoading, ...rest }) => {
   return (
     <TouchableRipple
       style={styles.button}
@@ -74,7 +74,7 @@ export const Button = ({children, onPress, showLoading, ...rest}) => {
       {showLoading ? (
         <ActivityIndicator color={Colors.secondary} />
       ) : (
-        <TEXT bold style={{color: '#f5f5f5', letterSpacing: 0.2}}>
+        <TEXT bold style={{ color: '#f5f5f5', letterSpacing: 0.2 }}>
           {children}
         </TEXT>
       )}
@@ -82,21 +82,21 @@ export const Button = ({children, onPress, showLoading, ...rest}) => {
   );
 };
 
-export const Input = ({label, onChangeText, ...rest}) => {
+export const Input = ({ label, onChangeText, ...rest }) => {
   return (
     <TextInput
       placeholder={label}
       placeholderTextColor="#bdbdbd"
       style={styles.input}
       selectionColor={Colors.secondary}
-      theme={{colors: {primary: Colors.secondary}}}
+      theme={{ colors: { primary: Colors.secondary } }}
       onChangeText={onChangeText}
       {...rest}
     />
   );
 };
 
-export const RippleIcon = ({onPress, size, children, style}) => (
+export const RippleIcon = ({ onPress, size, children, style }) => (
   <View>
     <TouchableRipple
       centered={true}

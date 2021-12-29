@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {View, ScrollView, StyleSheet, Image} from 'react-native';
-import {signIn} from '../../data/reducers/auth/auth.reducer';
+import React, { useState } from 'react';
+import { View, ScrollView, StyleSheet, Image } from 'react-native';
+import { signIn } from '../../data/reducers/auth/auth.reducer';
 
-import {Button, TEXT as Text, Input} from '../../utils/UI/Custom';
-import {Colors} from '../../utils/UI/Colors';
-import {useDispatch, useSelector} from 'react-redux';
-import {Snack} from '../../utils/components/Snackbar';
-import {numbersOnlyRegex} from '../../utils/functions';
+import { Button, TEXT as Text, Input } from '../../utils/UI/Custom';
+import { Colors } from '../../utils/UI/Colors';
+import { useDispatch, useSelector } from 'react-redux';
+import { Snack } from '../../utils/components/Snackbar';
+import { numbersOnlyRegex } from '../../utils/functions';
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
   const dispatch = useDispatch();
-  const {loading} = useSelector(state => state.auth);
+  const { loading } = useSelector(state => state.auth);
   const [input, setInput] = useState('');
 
   const handleSubmit = async () => {
@@ -24,14 +24,14 @@ const Login = ({navigation}) => {
     if (res?.error) {
       console.log(JSON.stringify(res));
     } else {
-      navigation.navigate('OTPScreen', {input});
+      navigation.navigate('OTPScreen', { input });
     }
   };
 
   return (
     <View style={styles.container}>
       <View>
-        <Text size="very-large" style={{textAlign: 'center'}} semiBold>
+        <Text size="very-large" style={{ textAlign: 'center' }} semiBold>
           Welcome on Social!
         </Text>
         <Image

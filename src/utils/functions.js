@@ -12,23 +12,6 @@ export const truncate = (str, num) => {
   }
 };
 
-// export const getAge = dateString => {
-//   if (dateString === '') return null;
-//   var today = new Date();
-//   console.log({ today });
-//   let birthDate = new Date(dateString).getDate();
-//   console.log({ birthDate, dateString });
-//   console.log('birth, ', birthDate);
-//   let birthYear = birthDate.getFullYear();
-//   var age = today.getFullYear() - birthYear;
-//   var m = today.getMonth() - birthDate.getMonth();
-//   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-//     age--;
-//   }
-//   console.log('in func', { age });
-//   return age.toString();
-// };
-
 export const getAge = dateString => {
   if (!dateString) return null;
   let dob = dateString.split(' ');
@@ -49,3 +32,5 @@ export const getAge = dateString => {
   }
   return age;
 };
+
+export const generateId = (id1, id2) => (id1 > id2 ? id1 + id2 : id2 + id1);

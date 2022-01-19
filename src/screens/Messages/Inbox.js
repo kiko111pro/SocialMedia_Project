@@ -10,47 +10,7 @@ const DATA = true
   ? [
       {
         image: null,
-        name: 'Lana Rhodes',
-        message: 'Hey There how you doing hope you are well there',
-      },
-      {
-        image: null,
-        name: 'Dani Daniels',
-        message: 'Hey There how you doing hope you are well there',
-      },
-      {
-        image: null,
-        name: 'Ava Addams',
-        message: 'Hey There how you doing hope you are well there',
-      },
-      {
-        image: null,
-        name: 'Skylar Vox',
-        message: 'Hey There how you doing hope you are well there',
-      },
-      {
-        image: null,
-        name: 'Mia Khalifa',
-        message: 'Hey There how you doing hope you are well there',
-      },
-      {
-        image: null,
-        name: 'Kendra Lust',
-        message: 'Hey There how you doing hope you are well there',
-      },
-      {
-        image: null,
-        name: 'Riley Reid',
-        message: 'Hey There how you doing hope you are well there',
-      },
-      {
-        image: null,
-        name: 'Lena Paul',
-        message: 'Hey There how you doing hope you are well there',
-      },
-      {
-        image: null,
-        name: 'Mia Malkova',
+        name: 'Piyush',
         message: 'Hey There how you doing hope you are well there',
       },
     ]
@@ -91,6 +51,7 @@ function Inbox() {
         keyExtractor={(i, id) => id}
         renderItem={renderItem}
       />
+      {/* <TEXT>Coming in next version</TEXT> */}
     </>
   );
 }

@@ -29,7 +29,7 @@ function TabHeader({ title, profile = false }) {
             style={styles.profileImage}
           />
           <TEXT bold style={{ color: 'white', fontSize: 28 }}>
-            {currentUserDetails && currentUserDetails._data.name}
+            {currentUserDetails && currentUserDetails?._data?.name}
           </TEXT>
         </View>
       )}

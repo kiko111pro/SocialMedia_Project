@@ -2,9 +2,11 @@ import React from 'react';
 import { View, StyleSheet, Image, Dimensions } from 'react-native';
 import { Button, TEXT as Text } from '../../utils/UI/Custom';
 import { Colors } from '../../utils/UI/Colors';
+import { useNavigation } from '@react-navigation/native';
 
 const Match = ({ route }) => {
   const { loggedInProfile, userSwiped } = route.params;
+  const navigation = useNavigation();
 
   console.log({ loggedInProfile, userSwiped });
   return (
@@ -43,7 +45,9 @@ const Match = ({ route }) => {
             style={styles.profileImage}
           />
         </View>
-        <Button>SEND MESSAGE</Button>
+        <Button onPress={() => navigation.navigate('Messages')}>
+          SEND MESSAGE
+        </Button>
       </View>
     </View>
   );

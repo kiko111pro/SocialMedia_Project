@@ -13,6 +13,7 @@ import Settings from '../screens/Settings/Settings';
 import Inbox from '../screens/Messages/Inbox';
 import Profile from '../screens/Settings/Profile';
 import Match from '../screens/Home/Match';
+import Chat from '../screens/Messages/Chat';
 
 const STACK = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -81,6 +82,7 @@ function AppShell() {
       <STACK.Group screenOptions={{ presentation: 'transparentModal' }}>
         <STACK.Screen name="MATCH" component={Match} />
       </STACK.Group>
+      <STACK.Screen name="ChatScreen" component={Chat} />
     </STACK.Navigator>
   );
 }

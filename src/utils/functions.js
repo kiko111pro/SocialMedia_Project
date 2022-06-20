@@ -1,7 +1,3 @@
-import { launchImageLibrary } from 'react-native-image-picker';
-import { Platform } from 'react-native';
-import React, { useState } from 'react';
-
 export const numbersOnlyRegex = /^\d+$/;
 
 export const truncate = (str, num) => {
@@ -11,23 +7,6 @@ export const truncate = (str, num) => {
     return str.slice(0, num) + '...';
   }
 };
-
-// export const getAge = dateString => {
-//   if (dateString === '') return null;
-//   var today = new Date();
-//   console.log({ today });
-//   let birthDate = new Date(dateString).getDate();
-//   console.log({ birthDate, dateString });
-//   console.log('birth, ', birthDate);
-//   let birthYear = birthDate.getFullYear();
-//   var age = today.getFullYear() - birthYear;
-//   var m = today.getMonth() - birthDate.getMonth();
-//   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-//     age--;
-//   }
-//   console.log('in func', { age });
-//   return age.toString();
-// };
 
 export const getAge = dateString => {
   if (!dateString) return null;
@@ -48,4 +27,15 @@ export const getAge = dateString => {
     age--;
   }
   return age;
+};
+
+export const generateId = (id1, id2) => (id1 > id2 ? id1 + id2 : id2 + id1);
+
+export const getMatchedUserInfo = (users, userLoggedIn) => {
+  const newUsers = { ...users };
+  delete newUsers[userLoggedIn];
+
+  const [id, user] = Object.entries(newUsers).flat();
+
+  return { id, ...user };
 };

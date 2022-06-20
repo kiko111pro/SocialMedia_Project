@@ -22,8 +22,6 @@ const Card = ({ card }) => {
             </Text>
             <Text size="small" style={{ color: '#eee' }}>
               {card?.city},{`  `}
-              {/* <Dot color="#eee" /> */}
-              {`  `}
               {card?.profession}
             </Text>
           </View>

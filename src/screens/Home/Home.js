@@ -2,17 +2,20 @@ import React, { useRef, useEffect, useState } from 'react';
 import { View, StyleSheet, Touchable, TouchableOpacity } from 'react-native';
 import TabHeader from '../../utils/components/TabHeader';
 import Card from '../../components/SwipingCard';
-import { DUMMY_DATA } from '../../utils/dummy';
+import { useNavigation } from '@react-navigation/native';
 import Swiper from 'react-native-deck-swiper';
 import AIcon from 'react-native-vector-icons/AntDesign';
 import firestore from '@react-native-firebase/firestore';
+
 import { TEXT } from '../../utils/UI/Custom';
 import { useSelector } from 'react-redux';
+import { generateId } from '../../utils/functions';
 
 function Home() {
   const swipeRef = useRef(null);
+  const navigation = useNavigation();
   const [profiles, setProfiles] = useState([]);
-  const { user } = useSelector(state => state.profile);
+  const { user, currentUserDetails } = useSelector(state => state.profile);
 
   const swipeLeft = async cardIndex => {
     if (!profiles[cardIndex]) return;
@@ -33,19 +36,63 @@ function Home() {
 
   const swipeRight = async cardIndex => {
     if (!profiles[cardIndex]) return;
-
     const userSwiped = profiles[cardIndex];
-    await firestore()
+
+    const loggedInProfile = currentUserDetails?._data;
+
+    //check if user swiped on u
+    const checkUserSwiped = await firestore()
       .collection('Users')
-      .doc(user.uid)
-      .collection('swipes')
       .doc(userSwiped.id)
-      .set(
-        {
-          userSwiped,
-        },
-        { merge: true },
-      );
+      .collection('swipes')
+      .doc(user.uid)
+      .get();
+    if (checkUserSwiped.exists) {
+      console.log('you matched with', userSwiped.name);
+      await firestore()
+        .collection('Users')
+        .doc(user.uid)
+        .collection('swipes')
+        .doc(userSwiped.id)
+        .set(
+          {
+            userSwiped,
+          },
+          { merge: true },
+        );
+
+      //CReate a match
+
+      await firestore()
+        .collection('matches')
+        .doc(generateId(user.uid, userSwiped.id))
+        .set({
+          users: {
+            [user.uid]: loggedInProfile,
+            [userSwiped.id]: userSwiped,
+          },
+          usersMatched: [user.uid, userSwiped.id],
+          timestamp: firestore.FieldValue.serverTimestamp(),
+        });
+
+      navigation.navigate('MATCH', {
+        loggedInProfile,
+        userSwiped,
+      });
+    } else {
+      console.log('you swiped on', userSwiped.name);
+      await firestore()
+        .collection('Users')
+        .doc(user.uid)
+        .collection('swipes')
+        .doc(userSwiped.id)
+        .set(
+          {
+            userSwiped,
+          },
+          { merge: true },
+        );
+    }
   };
 
   useEffect(() => {

@@ -5,13 +5,15 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { RippleIcon } from '../utils/UI/Custom';
 import { Colors } from '../utils/UI/Colors';
+import { useSelector } from 'react-redux';
 
 //screens
 import Home from '../screens/Home/Home';
 import Settings from '../screens/Settings/Settings';
 import Inbox from '../screens/Messages/Inbox';
 import Profile from '../screens/Settings/Profile';
-import { useSelector } from 'react-redux';
+import Match from '../screens/Home/Match';
+import Chat from '../screens/Messages/Chat';
 
 const STACK = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -77,6 +79,10 @@ function AppShell() {
       <STACK.Screen name="tab" component={TabNavigator} />
 
       <STACK.Screen name="Profile" component={Profile} />
+      <STACK.Group screenOptions={{ presentation: 'transparentModal' }}>
+        <STACK.Screen name="MATCH" component={Match} />
+      </STACK.Group>
+      <STACK.Screen name="ChatScreen" component={Chat} />
     </STACK.Navigator>
   );
 }
